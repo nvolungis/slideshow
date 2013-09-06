@@ -14,7 +14,6 @@
 		
 		$.extend(Slideshow.prototype, {
 			initialize: function(){
-				console.log($el.find(this.options.slides));
 				this.slides = new Slides($el.find(this.options.slides));
 				this.setup_panel();
 				this.start();
