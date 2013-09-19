@@ -1,0 +1,4 @@
+slideshow
+=========
+
+Bare-bones slideshow
