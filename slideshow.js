@@ -3,6 +3,7 @@
 		var $el = $(this),
 				defaults = {
 					interval: 4000,
+          transition: 1000,
 					container: $el,
 					slides: 'li'
 				};
@@ -16,14 +17,39 @@
 			initialize: function(){
 				this.slides = new Slides($el.find(this.options.slides));
 				this.setup_panel();
+        this.setup_wrapper();
 				this.start();
 			},
 			
 			setup_panel: function(){
 				this.$panel = this.options.container;
-				this.$panel.css({width:this.slides.length() * 100 + '%'});
+			  this.set_width();
+        this.set_styles();
+        this.set_transition();
 			},
+
+      set_width: function(){
+      	this.$panel.css({width:this.slides.length() * 100 + '%'});
+      },
+
+      set_styles: function(){
+        this.$panel.css({overflow: 'hidden'});
+        this.$panel.css({position: 'relative'});
+      },
+
+      set_transition: function(){
+        this.$panel.css({
+          '-webkit-transition' : 'left 1s ease',
+          '-moz-transition' : 'left 1s ease',
+          'transition' : 'left 1s ease'
+        });
+      },
 			
+      setup_wrapper: function(){
+        console.log('setup');
+        $el.css({overflow: 'hidden'});
+      },
+
 			update_position: function(index){
 				this.$panel.css({left: -index * 100 + '%'});
 			},
@@ -31,6 +57,7 @@
 			start: function(){
 				var that = this;
 				
+        this.update_position(0);
 				setInterval(function(){
 					var new_index = that.slides.next();
 					
@@ -51,6 +78,7 @@
 			initialize: function(){
 				this.set_indicies();
 				this.set_width();
+        this.set_styles();
 			},
 		
 			length: function(){
@@ -74,6 +102,10 @@
 			set_width: function(){
 				this._$slides.css({width: 100 / this.length() + '%' });
 			},
+
+      set_styles: function(){
+        this._$slides.css({float: 'left'});
+      },
 			
 			find_slide_by_index: function(index){
 				return this._$slides.filter('[data-index='+index+']');
@@ -102,3 +134,4 @@
 		new Slideshow(options);
 	}
 }(jQuery));
+
